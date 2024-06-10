@@ -1,4 +1,4 @@
-﻿namespace Suv_Xojaligi.Data.Contexts.Configurations;
+﻿namespace Suv_Xojaligi.Data.Page;
 
 public class PaginationParams
 {
@@ -6,11 +6,11 @@ public class PaginationParams
     public int PageSize { get; set; }
     public void EnsureOrSetDefaults()
     {
-        if(PageSize <= 0)
+        if (PageSize <= 0)
         {
             PageSize = 10;
         }
-        if(PageIndex<= 0)
+        if (PageIndex <= 0)
         {
             PageIndex = 1;
         }

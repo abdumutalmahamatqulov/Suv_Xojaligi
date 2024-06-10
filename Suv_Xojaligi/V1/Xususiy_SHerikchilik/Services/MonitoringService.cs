@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Suv_Xojaligi.Data.Contexts.Configurations;
 using Suv_Xojaligi.Data.Entities.Monitorings;
+using Suv_Xojaligi.Data.Page;
 using Suv_Xojaligi.V1.Auth.Services.Exceptions;
 using Suv_Xojaligi.V1.Xususiy_SHerikchilik.Models.Monitories;
 using Suv_Xojaligi.V1.Xususiy_SHerikchilik.Repositories.Interfaces;
@@ -40,9 +40,9 @@ public class MonitoringService : IMonitoringService
                 Id = Guid.NewGuid(),
                 Project_Name = model.Project_Name,
                 Private_Partner = model.Private_Partner,
-                Time_of_period = model.Time_of_period,
-                Registry_Number_And_Date = DateTime.Now,
-                Submission_And_Acceptance_Date = DateTime.Now,
+                Time_of_period = model.Time_of_period.HasValue ? ((int)model.Time_of_period.Value.TotalHours) : null,
+                Registry_Number_And_Date = DateTime.UtcNow,
+                Submission_And_Acceptance_Date = DateTime.UtcNow,
                 Project_Value = model.Project_Value,
                 Private_Partner_Investment = model.Private_Partner_Investment,
                 Operating_Costs = model.Operating_Costs
@@ -64,7 +64,7 @@ public class MonitoringService : IMonitoringService
                 Id = model.Id,
                 Project_Name = model.Project_Name,
                 Private_Partner = model.Private_Partner,
-                Time_of_period = model.Time_of_period,
+                Time_of_period = model.Time_of_period.HasValue? ((int)model.Time_of_period.Value.TotalHours) : null,
                 Registry_Number_And_Date = model.Registry_Number_And_Date,
                 Submission_And_Acceptance_Date = model.Submission_And_Acceptance_Date,
                 Project_Value = model.Project_Value,
