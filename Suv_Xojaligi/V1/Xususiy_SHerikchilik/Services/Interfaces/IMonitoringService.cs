@@ -1,4 +1,4 @@
-﻿using Suv_Xojaligi.Data.Contexts.Configurations;
+﻿using Suv_Xojaligi.Data.Page;
 using Suv_Xojaligi.V1.Xususiy_SHerikchilik.Models.Monitories;
 
 namespace Suv_Xojaligi.V1.Xususiy_SHerikchilik.Services.Interfaces

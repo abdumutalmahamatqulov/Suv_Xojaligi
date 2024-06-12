@@ -12,8 +12,8 @@ using Suv_Xojaligi.Data.Contexts;
 namespace Suv_Xojaligi.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240530104000_Create_new_Entitys")]
-    partial class Create_new_Entitys
+    [Migration("20240612054816_Initial_Migration")]
+    partial class Initial_Migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -156,11 +156,6 @@ namespace Suv_Xojaligi.Data.Migrations
                         {
                             UserId = new Guid("cde79a12-0364-4df7-ac73-9b9fb0a41745"),
                             RoleId = new Guid("066ffda9-706f-44c1-8e63-0de63801376d")
-                        },
-                        new
-                        {
-                            UserId = new Guid("8eedbe4f-def8-449c-ab43-08dc731c72ec"),
-                            RoleId = new Guid("066ffda9-706f-44c1-8e63-0de63801376d")
                         });
                 });
 
@@ -183,37 +178,55 @@ namespace Suv_Xojaligi.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Suv_Xojaligi.Data.Entities.Appeal_And_Applications.Appeals", b =>
+            modelBuilder.Entity("Suv_Xojaligi.Data.Entities.Appeal_And_Applications.Appeal", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AppealNumber")
+                    b.Property<string>("Appeal_Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Bank_Account_Number")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Document_Dowenloud")
+                    b.Property<string>("Email_Organization")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("FileId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name_Organization")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("SendDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("STIR")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<string>("Take_Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FileId");
 
                     b.ToTable("Appeals");
                 });
@@ -251,7 +264,82 @@ namespace Suv_Xojaligi.Data.Migrations
                     b.ToTable("Documents");
                 });
 
-            modelBuilder.Entity("Suv_Xojaligi.Data.Entities.Mains.Mains", b =>
+            modelBuilder.Entity("Suv_Xojaligi.Data.Entities.FileMetadata", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Extension")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FileMetadatas");
+                });
+
+            modelBuilder.Entity("Suv_Xojaligi.Data.Entities.Hisobotlar.Efficiency", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("ActualBudget")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("ActualEnergyConsumption")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CurrentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("EneryConsumption")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("Inestment")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("Percentage")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ReportId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReportId");
+
+                    b.ToTable("Efficiencies");
+                });
+
+            modelBuilder.Entity("Suv_Xojaligi.Data.Entities.Hisobotlar.Report", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -260,28 +348,41 @@ namespace Suv_Xojaligi.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
+                    b.Property<string?>("Explain")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<Guid?>("FileId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("InvestmentAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("NameObject")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("PrivatePartner")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ProjectDuration")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("ProjectValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Mains");
+                    b.HasIndex("FileId");
+
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("Suv_Xojaligi.Data.Entities.Monitorings.Monitoring", b =>
@@ -293,19 +394,31 @@ namespace Suv_Xojaligi.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal?>("Operating_Costs")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Private_Partner")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("Private_Partner_Investment")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Project_Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Reest_date_of_Registration")
+                    b.Property<decimal?>("Project_Value")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("Registry_Number_And_Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Time_of_period")
+                    b.Property<DateTime>("Submission_And_Acceptance_Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("Time_of_period")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -493,6 +606,39 @@ namespace Suv_Xojaligi.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Suv_Xojaligi.Data.Entities.Appeal_And_Applications.Appeal", b =>
+                {
+                    b.HasOne("Suv_Xojaligi.Data.Entities.FileMetadata", "DocumentDown")
+                        .WithMany()
+                        .HasForeignKey("FileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DocumentDown");
+                });
+
+            modelBuilder.Entity("Suv_Xojaligi.Data.Entities.Hisobotlar.Efficiency", b =>
+                {
+                    b.HasOne("Suv_Xojaligi.Data.Entities.Hisobotlar.Report", "Report")
+                        .WithMany()
+                        .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Report");
+                });
+
+            modelBuilder.Entity("Suv_Xojaligi.Data.Entities.Hisobotlar.Report", b =>
+                {
+                    b.HasOne("Suv_Xojaligi.Data.Entities.FileMetadata", "FileDown")
+                        .WithMany()
+                        .HasForeignKey("FileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FileDown");
                 });
 #pragma warning restore 612, 618
         }

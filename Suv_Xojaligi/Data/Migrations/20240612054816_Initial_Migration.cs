@@ -8,29 +8,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Suv_Xojaligi.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Create_new_Entitys : Migration
+    public partial class Initial_Migration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Appeals",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name_Organization = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AppealNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SendDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    Document_Dowenloud = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Appeals", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -91,20 +73,19 @@ namespace Suv_Xojaligi.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Mains",
+                name: "FileMetadatas",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Extension = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Mains", x => x.Id);
+                    table.PrimaryKey("PK_FileMetadatas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -114,8 +95,12 @@ namespace Suv_Xojaligi.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Project_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Private_Partner = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Time_of_period = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Reest_date_of_Registration = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Time_of_period = table.Column<int>(type: "int", nullable: true),
+                    Registry_Number_And_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Submission_And_Acceptance_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Project_Value = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Private_Partner_Investment = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Operating_Costs = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -247,6 +232,89 @@ namespace Suv_Xojaligi.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Appeals",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name_Organization = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Appeal_Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Take_Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    STIR = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email_Organization = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Bank_Account_Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    FileId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appeals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Appeals_FileMetadatas_FileId",
+                        column: x => x.FileId,
+                        principalTable: "FileMetadatas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameObject = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PrivatePartner = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RegistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    InvestmentAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ProjectDuration = table.Column<int>(type: "int", nullable: true),
+                    ProjectValue = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Explain = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FileId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reports_FileMetadatas_FileId",
+                        column: x => x.FileId,
+                        principalTable: "FileMetadatas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Efficiencies",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: true),
+                    Inestment = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    EneryConsumption = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ActualEnergyConsumption = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ActualBudget = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Percentage = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    CurrentStatus = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    ReportId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Efficiencies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Efficiencies_Reports_ReportId",
+                        column: x => x.ReportId,
+                        principalTable: "Reports",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -264,11 +332,12 @@ namespace Suv_Xojaligi.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[,]
-                {
-                    { new Guid("066ffda9-706f-44c1-8e63-0de63801376d"), new Guid("8eedbe4f-def8-449c-ab43-08dc731c72ec") },
-                    { new Guid("066ffda9-706f-44c1-8e63-0de63801376d"), new Guid("cde79a12-0364-4df7-ac73-9b9fb0a41745") }
-                });
+                values: new object[] { new Guid("066ffda9-706f-44c1-8e63-0de63801376d"), new Guid("cde79a12-0364-4df7-ac73-9b9fb0a41745") });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appeals_FileId",
+                table: "Appeals",
+                column: "FileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -307,6 +376,16 @@ namespace Suv_Xojaligi.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Efficiencies_ReportId",
+                table: "Efficiencies",
+                column: "ReportId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_FileId",
+                table: "Reports",
+                column: "FileId");
         }
 
         /// <inheritdoc />
@@ -334,7 +413,7 @@ namespace Suv_Xojaligi.Data.Migrations
                 name: "Documents");
 
             migrationBuilder.DropTable(
-                name: "Mains");
+                name: "Efficiencies");
 
             migrationBuilder.DropTable(
                 name: "Monitorings");
@@ -347,6 +426,12 @@ namespace Suv_Xojaligi.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Reports");
+
+            migrationBuilder.DropTable(
+                name: "FileMetadatas");
         }
     }
 }

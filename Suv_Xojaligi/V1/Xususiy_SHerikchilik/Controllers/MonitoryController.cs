@@ -31,7 +31,7 @@ public class MonitoryController : ControllerBase
         return Ok(await _monitoringService.CreateMonitoring(model));
     }
     [HttpPut("updateMonitory")]
-    public async ValueTask<IActionResult> UpdateMonitory(MonitoringUpdateModel model)
+    public async ValueTask<IActionResult> UpdateMonitory([FromForm]MonitoringUpdateModel model)
     {
         return Ok(await _monitoringService.Update(model));
     }

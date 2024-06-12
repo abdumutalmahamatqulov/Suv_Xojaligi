@@ -5,6 +5,14 @@ using Microsoft.OpenApi.Models;
 using Suv_Xojaligi.V1.Auth.Services.AuthServices;
 using Suv_Xojaligi.V1.Auth.Services.Interfaces;
 using Suv_Xojaligi.V1.Auth.TokenGenerators;
+using Suv_Xojaligi.V1.FileMetadataFolder.Repositories;
+using Suv_Xojaligi.V1.FileMetadataFolder.Repositories.Interfaces;
+using Suv_Xojaligi.V1.FileMetadataFolder.Services;
+using Suv_Xojaligi.V1.FileMetadataFolder.Services.Interfaces;
+using Suv_Xojaligi.V1.Operator_SXV_viloyat_boshqarmalari_hodimi.Repositories;
+using Suv_Xojaligi.V1.Operator_SXV_viloyat_boshqarmalari_hodimi.Repositories.Interfaces;
+using Suv_Xojaligi.V1.Operator_SXV_viloyat_boshqarmalari_hodimi.Services;
+using Suv_Xojaligi.V1.Operator_SXV_viloyat_boshqarmalari_hodimi.Services.Interfaces;
 using Suv_Xojaligi.V1.Xususiy_SHerikchilik.Repositories;
 using Suv_Xojaligi.V1.Xususiy_SHerikchilik.Repositories.Interfaces;
 using Suv_Xojaligi.V1.Xususiy_SHerikchilik.Services;
@@ -19,9 +27,21 @@ public static class AddExtensionServices
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ITokenRepository, TokenRepository>();
         services.AddScoped<IUserService, UserService>();
+
         services.AddScoped<IMonitoringRepository, MonitoringRepository>();
         services.AddScoped<IMonitoringService, MonitoringService>();
 
+        services.AddScoped<IFileMetadataRepository, FileMetadataRepository>();
+        services.AddScoped<IFileMetadataService, FileMetadataService>();
+
+        services.AddScoped<IAppealRepository, AppealRepository>();
+        services.AddScoped<IAppealService, AppealService>();
+
+        services.AddScoped<IEfficiencyRepository, EfficiencyRepository>();
+        services.AddScoped<IEfficiencyService, EfficiencyService>();
+
+        services.AddScoped<IReportRepository, ReportRepository>();
+        services.AddScoped<IReportService, ReportService>();
         return services;
     }
     public static void AddSwaggerService(
