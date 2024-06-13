@@ -2,6 +2,7 @@
 using Suv_Xojaligi.Data.Entities.Hisobotlar;
 using Suv_Xojaligi.Data.Page;
 using Suv_Xojaligi.V1.Auth.Services.Exceptions;
+using Suv_Xojaligi.V1.FileMetadataFolder.Model;
 using Suv_Xojaligi.V1.FileMetadataFolder.Repositories.Interfaces;
 using Suv_Xojaligi.V1.FileMetadataFolder.Services.Interfaces;
 using Suv_Xojaligi.V1.Operator_SXV_viloyat_boshqarmalari_hodimi.Models.Reports;
@@ -61,7 +62,7 @@ public class ReportService : IReportService
         {
             var newReport = model.ToEntity();
             model.PlannedEfficiencie.ReportId = newReport.Id;
-            var efficiencyUpdate = await _efficiencyService.Update(model.PlannedEfficiencie);
+            var efficiencyUpdate = await _efficiencyService.Update(model.PlannedEfficiencie,model.Id);
             newReport.Id = efficiencyUpdate.Id;
             await _reportRepository.UpdateReport(newReport);
             return new ReportModel().MapFromEntity(newReport);
@@ -76,17 +77,16 @@ public class ReportService : IReportService
     {
         try
         {
-            var newReport = new Report();
 
-            newReport.Id = Guid.NewGuid();
-          
-            newReport.Explain = model.Explain;
-            var documentCreate = await _fileMetadataService.Update(model.FileUpdate);
-            newReport.FileId = documentCreate.Id;
-            var efficiencyPlanned = await _efficiencyService.CreateEfficiency(model.PlannedEfficiencie, newReport.Id);
-            var efficiencyReal = await _efficiencyService.CreateEfficiency(model.RealEffeciency, newReport.Id);
-            await _reportRepository.UpdateReport(newReport);
-            return new ReportModel().MapFromEntity(newReport);
+            FileMetadataModel createdFile = null;
+            if(model.FileUpdate is not null)
+            {
+                createdFile = await _fileMetadataService.Update(model.FileUpdate);
+            }
+            var efficiencyPlanned = await _efficiencyService.Update(model.PlannedEfficiencie, model.ReportId);
+            var efficiencyReal = await _efficiencyService.Update(model.RealEffeciency, model.ReportId);
+            var report = await _reportRepository.UpdateReport(model, createdFile?.Id);
+            return new ReportModel().MapFromEntity(report);
 
         }
         catch

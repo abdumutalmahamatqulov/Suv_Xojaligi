@@ -80,7 +80,18 @@ public class ReportController : ControllerBase
     [HttpPut("Edit")]
     public async ValueTask<IActionResult> Edit([FromForm]AddetionalDataModel model)
     {
-        return Ok(await _reportService.Edit(model));
+        try
+        {
+
+            return Ok(await _reportService.Edit(model));
+        }
+        catch(Suv_Xojaligi_ApiException suv)
+        {
+            return BadRequest(new
+            {
+                global = suv.Message
+            });
+        }
     }
 
 }

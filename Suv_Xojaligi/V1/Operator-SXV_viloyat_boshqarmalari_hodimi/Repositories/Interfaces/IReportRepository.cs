@@ -12,5 +12,6 @@ public interface IReportRepository : IBaseRepository<Report, ReportFilterModel>
     Task<Report> UpdateReport(Report report);
     Task<List<Report>> GetByFilter(ReportFilterModel model, string[] includes = null);
     Task<int> GetCount(ReportFilterModel model);
+    Task<Report> UpdateReport(AddetionalDataModel model, Guid? fileId);
 
 }

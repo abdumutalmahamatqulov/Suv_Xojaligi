@@ -53,7 +53,7 @@ public class EfficiencyService : IEfficiencyService
             throw new Suv_Xojaligi_ApiException(400, "efficiency_can_not_be_create");
         }
     }
-    public async ValueTask<EfficiencyModel> Update(EfficiencyUpdateModel model)
+    public async ValueTask<EfficiencyModel> Update(EfficiencyUpdateModel model,Guid id)
     {
         try
         {

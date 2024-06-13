@@ -12,6 +12,6 @@ public interface IEfficiencyService
     ValueTask<PagedResult<EfficiencyModel>> GetAllEfficiencies(EfficiencyFilterModel filter);
     ValueTask<bool> Delete(Guid id);
     ValueTask<EfficiencyModel> CreateEfficiency(EfficiencyCreateModel model,Guid reportId);
-    ValueTask<EfficiencyModel> Update(EfficiencyUpdateModel model);
+    ValueTask<EfficiencyModel> Update(EfficiencyUpdateModel model, Guid id);
 
 }

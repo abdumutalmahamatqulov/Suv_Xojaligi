@@ -34,6 +34,27 @@ public class ReportRepository : BaseRepository<Report,ReportFilterModel>,IReport
         await _appDbcontext.SaveChangesAsync();
         return report;
     }
+
+    public async Task<Report> UpdateReport(AddetionalDataModel model, Guid? fileId)
+    {
+        if(fileId.HasValue && fileId.Value != Guid.Empty)
+        {
+            await _appDbcontext.Reports.Where(x => x.Id == model.ReportId)
+            .ExecuteUpdateAsync(
+                x => x.SetProperty(a => a.Explain, a => model.Explain)
+                .SetProperty(a => a.FileId, a => fileId.Value)
+                .SetProperty(r => r.UpdatedAt, r => DateTime.UtcNow)
+            );
+        }
+        else
+        {
+            await _appDbcontext.Reports.Where(x => x.Id == model.ReportId)
+                .ExecuteUpdateAsync(x => x.SetProperty(a => a.Explain, a => model.Explain));
+        }
+
+        return await _appDbcontext.Reports.FirstOrDefaultAsync(x => x.Id == model.ReportId);
+    }
+
     public async Task<Report> UpdateReport(Report report)
     {
         await _appDbcontext.Reports.Where(x => x.Id == report.Id)

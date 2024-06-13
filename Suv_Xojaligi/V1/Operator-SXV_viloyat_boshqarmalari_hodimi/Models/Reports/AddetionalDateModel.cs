@@ -7,7 +7,7 @@ public class AddetionalDataModel
 {
     public Guid ReportId { get; set; }
     public string Explain { get; set; }
-    public EfficiencyCreateModel PlannedEfficiencie { get; set; }
-    public EfficiencyCreateModel RealEffeciency { get; set; }
+    public EfficiencyUpdateModel PlannedEfficiencie { get; set; }
+    public EfficiencyUpdateModel RealEffeciency { get; set; }
     public UpdateFileMetadataModel FileUpdate { get; set; }
 }
