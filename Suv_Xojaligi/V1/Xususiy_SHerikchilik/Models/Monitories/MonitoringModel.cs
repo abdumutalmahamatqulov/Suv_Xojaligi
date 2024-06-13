@@ -8,7 +8,7 @@ namespace Suv_Xojaligi.V1.Xususiy_SHerikchilik.Models.Monitories
         public Guid Id { get; set; }
         public string Project_Name { get; set; }
         public string Private_Partner { get; set; }
-        public int? Time_of_period { get; set; }
+        public TimeSpan? Time_of_period { get; set; }
         public DateTime Registry_Number_And_Date { get; set; }
         public DateTime Submission_And_Acceptance_Date { get; set; }
         public decimal? Project_Value { get; set; }
@@ -19,7 +19,7 @@ namespace Suv_Xojaligi.V1.Xususiy_SHerikchilik.Models.Monitories
             Id = entity.Id;
             Project_Name = entity.Project_Name;
             Private_Partner = entity.Private_Partner;
-            Time_of_period = entity.Time_of_period;
+            Time_of_period = entity.Time_of_period.HasValue ? TimeSpan.FromHours(entity.Time_of_period.Value):null ;
             Registry_Number_And_Date = entity.Registry_Number_And_Date;
             Submission_And_Acceptance_Date = entity.Submission_And_Acceptance_Date;
             Project_Value = entity.Project_Value;

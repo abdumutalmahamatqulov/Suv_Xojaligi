@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Suv_Xojaligi.Data.Entities.Appeal_And_Applications;
-using Suv_Xojaligi.Data.Entities.Mains;
 using Suv_Xojaligi.Data.Entities.Monitorings;
 using Suv_Xojaligi.Data.Entities.News;
 using Suv_Xojaligi.Data.Entities;
@@ -21,12 +20,11 @@ public class AppDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     public DbSet<Appeal> Appeals { get; set; }
 
     public DbSet<Entities.DWSH_Legal_Documents.Document> Documents { get; set; }
-    public DbSet<Mains> Mains { get; set; }
     public DbSet<Monitoring> Monitorings { get; set; }
     public DbSet<New> News { get; set; }
     public DbSet<FileMetadata> FileMetadatas { get; set; }
     public DbSet<Efficiency> Efficiencies { get; set; }
-    public DbSet<First_Stage> FirstStages { get; set; }
+    public DbSet<Report> Reports { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -35,9 +33,12 @@ public class AppDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
             .WithMany()
             .HasForeignKey(x => x.FileId);
 
-        builder.Entity<Efficiency>().HasOne(x => x.FileDown) 
+        builder.Entity<Efficiency>().HasOne(x => x.Report) 
             .WithMany()
-            .HasForeignKey(x=>x.FileId);
+            .HasForeignKey(x=>x.ReportId);
+        builder.Entity<Report>().HasOne(x => x.FileDown)
+            .WithMany()
+            .HasForeignKey(x => x.FileId);
 
         builder.ApplyConfiguration(new RoleConfiguration(Services));
         builder.ApplyConfiguration(new UserRoleConfiguration());

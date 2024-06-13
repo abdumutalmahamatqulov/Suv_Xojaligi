@@ -35,18 +35,9 @@ public class MonitoringService : IMonitoringService
     {
         try
         {
-            var newMonitoring = new Monitoring()
-            {
-                Id = Guid.NewGuid(),
-                Project_Name = model.Project_Name,
-                Private_Partner = model.Private_Partner,
-                Time_of_period = model.Time_of_period.HasValue ? ((int)model.Time_of_period.Value.TotalHours) : null,
-                Registry_Number_And_Date = DateTime.UtcNow,
-                Submission_And_Acceptance_Date = DateTime.UtcNow,
-                Project_Value = model.Project_Value,
-                Private_Partner_Investment = model.Private_Partner_Investment,
-                Operating_Costs = model.Operating_Costs
-            };
+            var newMonitoring = model.ToEntity();
+
+            newMonitoring.Time_of_period = model.Time_of_period.HasValue ? ((int)model.Time_of_period.Value.TotalHours) : null;
             await _monitoringRepository.AddMonitoringAsync(newMonitoring);
             return new MonitoringModel().MapFromEntity(newMonitoring);
         }
@@ -59,18 +50,9 @@ public class MonitoringService : IMonitoringService
     {
         try
         {
-            var newMonitoring = new Monitoring()
-            {
-                Id = model.Id,
-                Project_Name = model.Project_Name,
-                Private_Partner = model.Private_Partner,
-                Time_of_period = model.Time_of_period.HasValue? ((int)model.Time_of_period.Value.TotalHours) : null,
-                Registry_Number_And_Date = model.Registry_Number_And_Date,
-                Submission_And_Acceptance_Date = model.Submission_And_Acceptance_Date,
-                Project_Value = model.Project_Value,
-                Private_Partner_Investment = model.Private_Partner_Investment,
-                Operating_Costs = model.Operating_Costs
-            };
+            var newMonitoring = model.ToEntity();
+            newMonitoring.Time_of_period = model.Time_of_period.HasValue ? ((int)model.Time_of_period.Value.TotalHours) : null;
+
             await _monitoringRepository.UpdateMonitoringAsync(newMonitoring);
             return new MonitoringModel().MapFromEntity(newMonitoring);
         }

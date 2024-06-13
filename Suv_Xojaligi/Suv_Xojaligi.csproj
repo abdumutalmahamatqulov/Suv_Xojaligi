@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="V1\Common\Services\" />
     <Folder Include="V1\Raxbariyat\Controllers\" />
     <Folder Include="V1\Raxbariyat\Models\" />
     <Folder Include="V1\Raxbariyat\Repositories\" />
