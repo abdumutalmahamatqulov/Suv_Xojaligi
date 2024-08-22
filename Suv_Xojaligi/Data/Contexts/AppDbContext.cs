@@ -40,6 +40,10 @@ public class AppDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
             .WithMany()
             .HasForeignKey(x => x.FileId);
 
+        builder.Entity<New>().HasOne(x => x.ImageUrl)
+            .WithMany()
+            .HasForeignKey(x => x.ImageId);
+
         builder.ApplyConfiguration(new RoleConfiguration(Services));
         builder.ApplyConfiguration(new UserRoleConfiguration());
         builder.ApplyConfiguration(new UserConfiguration());

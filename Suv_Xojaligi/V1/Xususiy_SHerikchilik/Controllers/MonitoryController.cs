@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Suv_Xojaligi.V1.Xususiy_SHerikchilik.Models.Monitories;
 using Suv_Xojaligi.V1.Xususiy_SHerikchilik.Services.Interfaces;
@@ -26,16 +27,22 @@ public class MonitoryController : ControllerBase
         return Ok(await _monitoringService.GetByFilter(filter));
     }
     [HttpPost("createMonitory")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
+
     public async ValueTask<IActionResult> CreateMonitory([FromForm]MonitoringCreateModel model)
     {
         return Ok(await _monitoringService.CreateMonitoring(model));
     }
     [HttpPut("updateMonitory")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
+
     public async ValueTask<IActionResult> UpdateMonitory([FromForm]MonitoringUpdateModel model)
     {
         return Ok(await _monitoringService.Update(model));
     }
     [HttpDelete("deleteMonitory")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
+
     public async ValueTask<IActionResult> DeleteMonitory([FromForm]Guid id)
     {
         return Ok(await _monitoringService.Delete(id));

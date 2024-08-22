@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Suv_Xojaligi.V1.Auth.Services.Exceptions;
 using Suv_Xojaligi.V1.Xususiy_SHerikchilik.Models.Appeals;
@@ -38,6 +39,8 @@ public class AppealController : ControllerBase
         }
     }
     [HttpPost("create_appeal")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
+
     public async ValueTask<IActionResult> Create([FromForm] AppealCreateModel model)
     {
         try
@@ -54,6 +57,8 @@ public class AppealController : ControllerBase
         }
     }
     [HttpPut("Update")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
+
     public async ValueTask<IActionResult> Update([FromForm]AppealUpdateModel model)
     {
         try
@@ -70,6 +75,8 @@ public class AppealController : ControllerBase
         }
     }
     [HttpDelete("Delete_Appeal_By_id")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
+
     public async ValueTask<IActionResult> Delete([FromForm]Guid id)
     {
         try

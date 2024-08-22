@@ -21,7 +21,7 @@ public class AppealUpdateModel
     public Appeal ToEntity()
     {
         var appealCreate = new Appeal();
-        appealCreate.Id = Guid.NewGuid();
+        appealCreate.Id = this.Id;
         appealCreate.Name_Organization = this.Name_Organization;
         appealCreate.Appeal_Number = this.Appeal_Number;
         appealCreate.Take_Location = this.Take_Location;

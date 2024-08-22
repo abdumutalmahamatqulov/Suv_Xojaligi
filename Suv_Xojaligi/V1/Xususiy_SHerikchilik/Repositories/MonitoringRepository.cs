@@ -70,13 +70,13 @@ namespace Suv_Xojaligi.V1.Xususiy_SHerikchilik.Repositories
 
             if (!string.IsNullOrEmpty(model.Project_Name) && !string.IsNullOrWhiteSpace(model.Project_Name))
             {
-                query = query.Where(x => x.Project_Name.ToLower() == $"%{model.Project_Name.Trim().ToLower()}%");
+                query = query.Where(x =>EF.Functions.Like( x.Project_Name.ToLower() , $"%{model.Project_Name.Trim().ToLower()}%"));
             }
 
 
             if (!string.IsNullOrEmpty(model.Private_Partner) && !string.IsNullOrWhiteSpace(model.Private_Partner))
             {
-                query = query.Where(x => x.Private_Partner.ToLower() == $"%{model.Private_Partner.Trim().ToLower()}%");
+                query = query.Where(x =>EF.Functions.Like( x.Private_Partner.ToLower() , $"%{model.Private_Partner.Trim().ToLower()}%"));
             }
 
             return query;
@@ -95,7 +95,6 @@ namespace Suv_Xojaligi.V1.Xususiy_SHerikchilik.Repositories
                 .ExecuteUpdate(
                 p => p.SetProperty(m => m.Project_Name, m => monitoring.Project_Name)
                 .SetProperty(m => m.Private_Partner, m => monitoring.Private_Partner)
-                .SetProperty( m=> m.UpdatedAt, m => DateTime.UtcNow)
                 .SetProperty(m => m.CreatedAt, m=>monitoring.CreatedAt)
                 .SetProperty(m => m.Time_of_period,m=> monitoring.Time_of_period)
                 .SetProperty(m => m.Registry_Number_And_Date, m => DateTime.UtcNow)

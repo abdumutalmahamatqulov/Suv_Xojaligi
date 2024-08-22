@@ -13,6 +13,10 @@ using Suv_Xojaligi.V1.Operator_SXV_viloyat_boshqarmalari_hodimi.Repositories;
 using Suv_Xojaligi.V1.Operator_SXV_viloyat_boshqarmalari_hodimi.Repositories.Interfaces;
 using Suv_Xojaligi.V1.Operator_SXV_viloyat_boshqarmalari_hodimi.Services;
 using Suv_Xojaligi.V1.Operator_SXV_viloyat_boshqarmalari_hodimi.Services.Interfaces;
+using Suv_Xojaligi.V1.Xususiy_SHerikchilik.AllNews.Repositories;
+using Suv_Xojaligi.V1.Xususiy_SHerikchilik.AllNews.Repositories.Interfaces;
+using Suv_Xojaligi.V1.Xususiy_SHerikchilik.AllNews.Services;
+using Suv_Xojaligi.V1.Xususiy_SHerikchilik.AllNews.Services.Interfaces;
 using Suv_Xojaligi.V1.Xususiy_SHerikchilik.Repositories;
 using Suv_Xojaligi.V1.Xususiy_SHerikchilik.Repositories.Interfaces;
 using Suv_Xojaligi.V1.Xususiy_SHerikchilik.Services;
@@ -42,6 +46,9 @@ public static class AddExtensionServices
 
         services.AddScoped<IReportRepository, ReportRepository>();
         services.AddScoped<IReportService, ReportService>();
+
+        services.AddScoped<INewRepository, NewRepository>();
+        services.AddScoped<INewService, NewService>();
         return services;
     }
     public static void AddSwaggerService(

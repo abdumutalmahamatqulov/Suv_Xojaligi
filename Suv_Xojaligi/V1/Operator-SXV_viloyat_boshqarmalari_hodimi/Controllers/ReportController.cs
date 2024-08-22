@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Suv_Xojaligi.V1.Auth.Services.Exceptions;
@@ -32,6 +33,7 @@ public class ReportController : ControllerBase
     }
 
     [HttpPost("CreateEfficiency")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public async ValueTask<IActionResult> CreateEfficiency([FromForm] ReportCreateModel model)
     {
         try
@@ -48,6 +50,7 @@ public class ReportController : ControllerBase
     }
 
     [HttpPut("UpdateReport")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public async ValueTask<IActionResult> UpdateReport([FromForm] ReportUpdateModel model)
     {
         try
@@ -62,7 +65,10 @@ public class ReportController : ControllerBase
             });
         }
     }
+
     [HttpDelete]
+    [Authorize(Roles = "Admin")]
+
     public async ValueTask<IActionResult> Delete(Guid id)
     {
         try
@@ -78,6 +84,8 @@ public class ReportController : ControllerBase
         }
     }
     [HttpPut("Edit")]
+    [Authorize(Roles = "SuperAdmin")]
+
     public async ValueTask<IActionResult> Edit([FromForm]AddetionalDataModel model)
     {
         try

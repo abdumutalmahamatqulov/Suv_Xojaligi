@@ -90,13 +90,13 @@ public class ReportRepository : BaseRepository<Report,ReportFilterModel>,IReport
 
         if (!string.IsNullOrEmpty(model.NameObject) && !string.IsNullOrWhiteSpace(model.NameObject))
         {
-            query = query.Where(x => x.NameObject.ToLower() == $"%{model.NameObject.Trim().ToLower()}%");
+            query = query.Where(x => EF.Functions.Like(x.NameObject.ToLower(), $"%{model.NameObject.Trim().ToLower()}%"));
         }
 
 
         if (!string.IsNullOrEmpty(model.PrivatePartner) && !string.IsNullOrWhiteSpace(model.PrivatePartner))
         {
-            query = query.Where(x => x.PrivatePartner.ToLower() == $"%{model.PrivatePartner.Trim().ToLower()}%");
+            query = query.Where(x => EF.Functions.Like(x.PrivatePartner.ToLower(), $"%{model.PrivatePartner.Trim().ToLower()}%"));
         }
         return query;
     }

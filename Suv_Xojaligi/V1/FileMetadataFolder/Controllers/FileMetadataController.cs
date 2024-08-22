@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Suv_Xojaligi.V1.Auth.Services.Exceptions;
 using Suv_Xojaligi.V1.FileMetadataFolder.Model;
@@ -18,11 +19,15 @@ public class FileMetadataController : ControllerBase
     }
 
     [HttpPost]
+    //[Authorize(Roles = "SuperAdmin,Admin")]
+
     public async ValueTask<IActionResult> Create(CreateFileMetadataModel model)
     {
         return Ok(await _fileMetadataService.CreateAsync(model));
     }
     [HttpDelete]
+    [Authorize(Roles = "SuperAdmin,Admin")]
+
     public async ValueTask<IActionResult> Delete(Guid id)
     {
         try
@@ -39,6 +44,8 @@ public class FileMetadataController : ControllerBase
 
     }
     [HttpPut]
+    [Authorize(Roles = "SuperAdmin,Admin")]
+
     public async ValueTask<IActionResult> Update(UpdateFileMetadataModel update)
     {
         try

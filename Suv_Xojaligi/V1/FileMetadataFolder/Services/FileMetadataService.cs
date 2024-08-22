@@ -3,10 +3,11 @@ using Suv_Xojaligi.V1.FileMetadataFolder.Model;
 using Suv_Xojaligi.V1.FileMetadataFolder.Repositories.Interfaces;
 using Suv_Xojaligi.V1.FileMetadataFolder.Services.Interfaces;
 using System.Net.Mime;
+using System.Text.RegularExpressions;
 
 namespace Suv_Xojaligi.V1.FileMetadataFolder.Services;
 
-public class FileMetadataService : IFileMetadataService
+public partial class FileMetadataService : IFileMetadataService
 {
     private readonly IFileMetadataRepository _fileMetadataRepository;
     private readonly IHttpContextAccessor httpContextAccessor;
@@ -108,10 +109,17 @@ public class FileMetadataService : IFileMetadataService
     {
         var entity = await _fileMetadataRepository.Get(id);
         var mediaType = GetMediaType(entity.Extension);
-        httpContextAccessor.HttpContext.Response.Headers.ContentDisposition = "fileName=statis_" + entity.Name;
+        httpContextAccessor.HttpContext.Response.Headers.ContentDisposition = RemoveNonAsciiCharacters("fileName=statis_" + entity.Name);
         httpContextAccessor.HttpContext.Response.Headers.ContentType = mediaType;
         var stream = new MemoryStream(Convert.FromBase64String(entity.Body));
         return (stream, mediaType, entity.Name);
+    }
+
+
+    static string RemoveNonAsciiCharacters(string input)
+    {
+        // Replace non-ASCII characters with an empty string
+        return NonACIISymbolsRegex().Replace(input, "");
     }
 
     private string GetMediaType(string extension)
@@ -132,4 +140,7 @@ public class FileMetadataService : IFileMetadataService
 
         return "application/" + extension;
     }
+
+    [GeneratedRegex(@"[^\x00-\x7F]")]
+    private static partial Regex NonACIISymbolsRegex();
 }

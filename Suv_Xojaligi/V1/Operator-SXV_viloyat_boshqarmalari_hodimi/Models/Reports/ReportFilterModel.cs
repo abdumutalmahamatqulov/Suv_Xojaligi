@@ -1,4 +1,5 @@
-﻿using Suv_Xojaligi.Data.Page;
+﻿using System.ComponentModel.DataAnnotations;
+using Suv_Xojaligi.Data.Page;
 
 namespace Suv_Xojaligi.V1.Operator_SXV_viloyat_boshqarmalari_hodimi.Models.Reports;
 

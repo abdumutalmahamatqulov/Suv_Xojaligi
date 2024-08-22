@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿    using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using Suv_Xojaligi.Data.Contexts;
 using Suv_Xojaligi.Data.Entities.Appeal_And_Applications;
@@ -66,7 +66,7 @@ public class AppealRepository: BaseRepository<Appeal, AppealFilterModel>, IAppea
         }
         if(!string.IsNullOrEmpty(model.Name_Organization)&& !string.IsNullOrWhiteSpace(model.Name_Organization))
         {
-            query = query.Where(x => x.Name_Organization.ToLower() == $"%{model.Name_Organization.Trim().ToLower()}%");
+            query = query.Where(x => EF.Functions.Like(x.Name_Organization.ToLower(), $"%{model.Name_Organization.Trim().ToLower()}%"));
         }
         return query;
     }

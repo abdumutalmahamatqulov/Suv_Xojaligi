@@ -53,6 +53,13 @@ public class AuthService : IAuthService
         {
             throw new Suv_Xojaligi_ApiException(400, string.Join(", ", registerUser.Errors.Select(x => x.Description)));
         }
+
+
+/*        var users = await _userManager.FindByEmailAsync(user.Email);
+        var loginInfo = new UserLoginInfo("", "", "");
+        var result = await _userManager.AddLoginAsync(users, loginInfo);*/
+
+
         return new UserModel().MapFromEntity(newUser);
     }
 }
